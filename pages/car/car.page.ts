@@ -1,23 +1,29 @@
-import { expect, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 export class CarPage {
-  readonly page: Page;
+    page: Page;
+    
+    constructor(page: Page) { 
+        this.page = page 
+    }
 
-  constructor(page: Page) {
-    this.page = page;
-  }
+    async gotoHomePage() {
+        await this.page.goto("https://vnexpress.net/");
+    }
 
-  async gotoCarPage() {
-    await this.page.goto("https://vnexpress.net/oto-xe-may", {
-      waitUntil: "domcontentloaded",
-    });
-  }
+    async clickCarMenu() {
+        await this.page.locator("#wrap-main-nav").getByRole("link", { name: "Xe" }).click();
+    }
 
-  async clickTheoryExam() {
-    await this.page.getByRole("link", { name: "Thi lý thuyết" }).click();
-  }
+    async clickTheoryExam() {
+        await this.page.getByRole("link", { name: "Thi lý thuyết" }).click();
+    }
 
-  async verifyTheoryExamPage() {
-    await expect(this.page).toHaveURL(/thi-ly-thuyet/);
-  }
+    async selectLicenseA1() {
+        await this.page.getByRole("link", { name: "A1" }).click();
+    }
+
+    async openExam1() {
+        await this.page.getByRole("link", { name: "Đề số 1 Play", exact: true }).click();
+    }
 }
