@@ -1,23 +1,33 @@
-import { expect, Page } from "@playwright/test";
+import { test } from "@playwright/test";
+import { CarPage } from "../../pages/car/car.page";
 
-export class CarPage {
-  readonly page: Page;
+test.describe("VNExpress - Thi lý thuyết", () => {
 
-  constructor(page: Page) {
-    this.page = page;
-  }
+    test("Open A1 Exam 1", async ({ page }) => {
 
-  async gotoCarPage() {
-    await this.page.goto("https://vnexpress.net/oto-xe-may", {
-      waitUntil: "domcontentloaded",
+        const carPage = new CarPage(page);
+
+        await test.step("Go to VNExpress", async () => {
+            await carPage.gotoHomePage();
+        });
+
+        await test.step("Open Xe menu", async () => {
+            await carPage.clickCarMenu();
+        });
+
+        await test.step("Open Thi lý thuyết", async () => {
+            await carPage.clickTheoryExam();
+        });
+
+        await test.step("Select A1", async () => {
+            await carPage.selectLicenseA1();
+        });
+
+        await test.step("Open Đề số 1", async () => {
+            await carPage.openExam1();
+        });
+
     });
-  }
 
-  async clickTheoryExam() {
-    await this.page.getByRole("link", { name: "Thi lý thuyết" }).click();
-  }
+});
 
-  async verifyTheoryExamPage() {
-    await expect(this.page).toHaveURL(/thi-ly-thuyet/);
-  }
-}
