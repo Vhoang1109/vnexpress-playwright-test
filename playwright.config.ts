@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { chromium, defineConfig, devices } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -33,6 +33,7 @@ export default defineConfig({
     trace: "on",
     video: "retain-on-failure",
     screenshot: "only-on-failure",
+    //channel: 'chrome'
   },
 
   /* Configure projects for major browsers */
