@@ -2,15 +2,17 @@ import { Page } from "@playwright/test";
 
 export class CarPage {
     page: Page;
-    
-    constructor(page: Page) { 
-        this.page = page 
+
+    constructor(page: Page) {
+        this.page = page
     }
 
     async gotoHomePage() {
-        await this.page.goto("https://vnexpress.net/");
+        await this.page.goto("https://vnexpress.net/", {
+            waitUntil: "domcontentloaded",
+            timeout: 60000,
+        });
     }
-
     async clickCarMenu() {
         await this.page.locator("#wrap-main-nav").getByRole("link", { name: "Xe" }).click();
     }
