@@ -46,6 +46,7 @@ export class ContactPage {
     }
 
     async submitContactForm() {
+        await expect(this.submitButton).toBeEnabled();
         await this.submitButton.click();
     }
 
@@ -53,6 +54,7 @@ export class ContactPage {
         // VNExpress có thể bật popup login sau khi gửi form
         if (await this.closePopupButton.isVisible({ timeout: 5000 })) {
             await this.closePopupButton.click();
+            await expect(this.closePopupButton).toBeHidden();
         }
     }
 }
