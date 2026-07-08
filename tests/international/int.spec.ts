@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import { International } from "../../pages/international/int.page"
-
+test
 
 test("navigate to international", async ({ page }) => {
 
