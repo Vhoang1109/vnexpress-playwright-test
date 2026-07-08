@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { ContactData } from "../../test-data/contact-data";
 
 export class ContactPage {
     page: Page;
@@ -10,25 +11,21 @@ export class ContactPage {
     contentInput: Locator;
 
     submitButton: Locator;
-    loginPopupTitle: Locator;
     closePopupButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
 
+        // Contact form fields
         this.nameInput = page.locator("#fName");
         this.emailInput = page.locator("#fEmail");
         this.categorySelect = page.locator("#fCategory");
         this.titleInput = page.locator("#fTitle");
         this.contentInput = page.locator("#fContent");
 
-        this.submitButton = page.getByRole("button", { name: "Gửi", });
-
-        this.loginPopupTitle = page.getByText("Đăng nhập / Tạo tài khoản");
-
-        this.closePopupButton = page.getByRole("button", {
-            name: "×",
-        });
+        // Actions
+        this.submitButton = page.getByRole("button", { name: "Gửi" });
+        this.closePopupButton = page.getByRole("button", { name: "×" });
     }
 
     async gotoContactPage() {
@@ -40,18 +37,12 @@ export class ContactPage {
         await expect(this.nameInput).toBeVisible();
     }
 
-    async fillContactForm(
-        name: string,
-        email: string,
-        category: string,
-        title: string,
-        content: string
-    ) {
-        await this.nameInput.fill(name);
-        await this.emailInput.fill(email);
-        await this.categorySelect.selectOption(category);
-        await this.titleInput.fill(title);
-        await this.contentInput.fill(content);
+    async fillContactForm(data: ContactData) {
+        await this.nameInput.fill(data.name);
+        await this.emailInput.fill(data.email);
+        await this.categorySelect.selectOption({ label: data.category });
+        await this.titleInput.fill(data.title);
+        await this.contentInput.fill(data.content);
     }
 
     async submitContactForm() {
@@ -59,10 +50,9 @@ export class ContactPage {
     }
 
     async closeLoginPopupIfVisible() {
-        const closeButton = this.page.getByRole("button", { name: "×" });
-
-        if (await closeButton.isVisible({ timeout: 5000 })) {
-            await closeButton.click();
+        // VNExpress có thể bật popup login sau khi gửi form
+        if (await this.closePopupButton.isVisible({ timeout: 5000 })) {
+            await this.closePopupButton.click();
         }
     }
 }
