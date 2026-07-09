@@ -1,9 +1,11 @@
 import { test } from "@playwright/test";
 import { LoginPage } from "../../pages/login/login.page";
-test.describe("VNExpress Login", () => {
+import { loginData } from "../../test-data/login-data";
 
+test.describe("VNExpress Login", () => {
   test.setTimeout(60000);
-  test.beforeEach("Goto login email", async ({ page }) => {
+
+  test.beforeEach("Open login popup", async ({ page }) => {
     const loginPage = new LoginPage(page);
 
     await test.step("Go to VNExpress", async () => {
@@ -17,47 +19,85 @@ test.describe("VNExpress Login", () => {
     await test.step("Verify Email Textbox", async () => {
       await loginPage.verifyEmailTextbox();
     });
+  });
+
+  test("LOGIN_001 - Login success", async ({ page }) => {
+    const loginPage = new LoginPage(page);
 
     await test.step("Fill Email", async () => {
-      await loginPage.fillEmail("vhoang1192@gmail.com");
+      await loginPage.fillEmail(loginData.validUser.email);
+      await loginPage.clickContinue();
     });
-
-  });
-
-  test("Login success", async ({ page }) => {
-
-    const loginPage = new LoginPage(page);
-
 
     await test.step("Verify Password Textbox", async () => {
       await loginPage.verifyPasswordTextbox();
     });
 
     await test.step("Fill Password", async () => {
-      await loginPage.fillPassword("@Hoang1109");
+      await loginPage.fillPassword(loginData.validUser.password);
     });
 
     await test.step("Click Login", async () => {
       await loginPage.clickLogin();
     });
-
   });
 
-  test("Login fail", async ({ page }) => {
-
+  test("LOGIN_002 - Login fail with wrong password", async ({ page }) => {
     const loginPage = new LoginPage(page);
+
+    await test.step("Fill Email", async () => {
+      await loginPage.fillEmail(loginData.invalidUser.email);
+      await loginPage.clickContinue();
+    });
 
     await test.step("Verify Password Textbox", async () => {
       await loginPage.verifyPasswordTextbox();
     });
 
-    await test.step("Fill Password", async () => {
-      await loginPage.fillPassword('');
+    await test.step("Fill Wrong Password", async () => {
+      await loginPage.fillPassword(loginData.invalidUser.password);
     });
 
     await test.step("Click Login", async () => {
       await loginPage.clickLogin();
     });
+  });
 
+  test("LOGIN_003 - Login fail with empty password", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+
+    await test.step("Fill Email", async () => {
+      await loginPage.fillEmail(loginData.emptyPassword.email);
+      await loginPage.clickContinue();
+    });
+
+    await test.step("Verify Password Textbox", async () => {
+      await loginPage.verifyPasswordTextbox();
+    });
+
+    await test.step("Fill Empty Password", async () => {
+      await loginPage.fillPassword(loginData.emptyPassword.password);
+    });
+
+    await test.step("Click Login", async () => {
+      await loginPage.clickLogin();
+    });
+  });
+
+    test("LOGIN_004 - Login fail with empty email", async ({ page }) => {
+    const loginPage = new LoginPage(page);
+
+    await test.step("Fill Email", async () => {
+      await loginPage.fillEmail(loginData.emptyEmail.email);
+      await loginPage.clickContinue();
+    });
+
+    await test.step("Verify Password Textbox", async () => {
+      await loginPage.verifyEmailTextbox();
+    });
+
+    await test.step("Click Login", async () => {
+      await loginPage.clickLogin();
+    });
   });
 });

@@ -21,6 +21,6 @@ export const loginData: Record<string, LoginData> = {
 
     emptyEmail: {
         email: "",
-        password: ""
+        password: "",
     },
 };
