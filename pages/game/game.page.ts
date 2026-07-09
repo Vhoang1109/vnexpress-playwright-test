@@ -21,10 +21,6 @@ export class GamePage {
         this.closePopupButton = page.getByRole("button", { name: "×" });
     }
 
-    async slowDemo() {
-        await this.page.waitForTimeout(1000);
-    }
-
     async gotoGamePage() {
         await this.page.goto(this.gameUrl, {
             timeout: 60000,
@@ -33,7 +29,6 @@ export class GamePage {
 
         await expect(this.page).toHaveURL(this.gameUrl);
         await expect(this.gameHeading).toBeVisible();
-        await this.slowDemo();
     }
 
     getGameLink(gameSlug: string): Locator {
@@ -50,19 +45,19 @@ export class GamePage {
         await expect(this.getGameLink("xep-chu")).toBeVisible();
         await expect(this.getGameLink("chinh-ta")).toBeVisible();
         await expect(this.getGameLink("sudoku")).toBeVisible();
-        await this.slowDemo();
     }
 
     async clickPlayButtonByGameSlug(gameSlug: string) {
         const gameCard = this.getGameCard(gameSlug);
-        const playButton = gameCard.locator("a.button-play.btn_check_login").first();
+        const playButton = gameCard
+            .locator("a.button-play.btn_check_login")
+            .first();
 
         await expect(gameCard).toBeVisible();
         await expect(playButton).toBeVisible();
+        await expect(playButton).toBeEnabled();
 
-        await this.slowDemo();
         await playButton.click();
-        await this.slowDemo();
     }
 
     async clickGameImageByGameSlug(gameSlug: string) {
@@ -72,9 +67,7 @@ export class GamePage {
         await expect(gameCard).toBeVisible();
         await expect(gameImage).toBeVisible();
 
-        await this.slowDemo();
         await gameImage.click();
-        await this.slowDemo();
     }
 
     async verifyGameDetailPageOpened(gameSlug: string) {
@@ -82,13 +75,10 @@ export class GamePage {
             new RegExp(`/thu-gian/tro-choi/${gameSlug}`),
             { timeout: 15000 }
         );
-
-        await this.slowDemo();
     }
 
     async closeLoginPopupIfVisible() {
         if (await this.closePopupButton.isVisible().catch(() => false)) {
-            await this.slowDemo();
             await this.closePopupButton.click();
         }
     }
@@ -101,6 +91,5 @@ export class GamePage {
 
         await expect(this.page).toHaveURL(this.gameUrl);
         await expect(this.gameHeading).toBeVisible();
-        await this.slowDemo();
     }
 }
