@@ -7,6 +7,7 @@ test.describe("VNExpress - Thời sự", () => {
 
     test("NEWS_E2E_001 - User browses Thời sự categories and opens articles", async ({ page }) => {
         const newsPage = new NewsPage(page);
+
         await test.step("Go to homepage", async () => {
             await newsPage.gotoHomePage();
         });
@@ -15,12 +16,19 @@ test.describe("VNExpress - Thời sự", () => {
             await newsPage.clickNewsMenu();
         });
 
-        for (const category of newsCategories) {
-            await test.step(`Open ${category.name} then back to Thời sự`, async () => {
-                await newsPage.openCategory(category.name, category.path);
-                await newsPage.backToNewsPage();
+        for (const { name, slug } of newsCategories) {
+            await test.step(`Open ${name}`, async () => {
+                await newsPage.openCategory(name, slug);
+
+                if (slug === "huong-toi-ky-nguyen-moi") {
+                    await newsPage.backToNewsPage();
+                }
             });
-        }
+        };
+
+        await test.step("Back to Thời sự", async () => {
+            await newsPage.backToNewsPage();
+        });
 
         await test.step("Open main article by image then back to Thời sự", async () => {
             await newsPage.clickMainArticleImage();
