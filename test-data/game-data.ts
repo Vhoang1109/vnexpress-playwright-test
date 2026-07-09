@@ -3,17 +3,17 @@ export type GameData = {
     gameSlug: string;
 };
 
-export const gameData01: GameData = {
-    gameName: "Xếp chữ",
-    gameSlug: "xep-chu",
-};
-
-export const gameData02: GameData = {
-    gameName: "Chính tả",
-    gameSlug: "chinh-ta",
-};
-
-export const gameData03: GameData = {
-    gameName: "Sudoku",
-    gameSlug: "sudoku",
-};
+export const gameData: GameData[] = [
+    {
+        gameName: "Xếp chữ",
+        gameSlug: "xep-chu",
+    },
+    {
+        gameName: "Chính tả",
+        gameSlug: "chinh-ta",
+    },
+    {
+        gameName: "Sudoku",
+        gameSlug: "sudoku",
+    },
+];
