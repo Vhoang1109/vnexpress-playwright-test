@@ -29,18 +29,11 @@ export class CarPage {
     }
 
     async openExam1() {
-        await this.page.getByRole("link", {
-            name: "Đề số 1 Play",
-            exact: true,
-        }).click();
+        await this.page.getByRole("link", { name: "Đề số 1 Play", exact: true, }).click();
     }
 
     async verifyExam1Opened() {
         await expect(
-            this.page.getByRole("link", {
-                name: "Đề số 1 Play",
-                exact: true,
-            })
-        ).toBeVisible();
+            this.page.getByRole("link", {name: "Đề số 1 Play", exact: true,})).toBeVisible();
     }
 }

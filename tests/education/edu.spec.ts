@@ -73,9 +73,9 @@ test.describe("VNExpress - Education", () => {
             await eduPage.clickViewResult();
         });
 
-        // await test.step("Verify invalid message", async () => {
-        //     await eduPage.verifyInvalidExamNumber();
-        // });
+        await test.step("Verify invalid message", async () => {
+            await eduPage.verifyInvalidExamNumber();
+        });
     });
 
 });
