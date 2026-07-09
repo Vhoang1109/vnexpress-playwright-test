@@ -52,7 +52,7 @@ export class GamePage extends BasePage {
             .locator("xpath=ancestor::article[1]");
     }
 
-    // Verification
+    // Verification (co the bo)
     async verifyGameListVisible() {
         await expect(this.getGameLink("xep-chu")).toBeVisible();
         await expect(this.getGameLink("chinh-ta")).toBeVisible();
