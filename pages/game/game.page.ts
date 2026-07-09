@@ -1,26 +1,31 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "../base-page/base.page";
 
-export class GamePage {
-    page: Page;
+export class GamePage extends BasePage {
 
     gameUrl: string;
-    homeUrl: string;
 
     gameHeading: Locator;
     loginPopup: Locator;
     closePopupButton: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
 
-        this.homeUrl = "https://vnexpress.net/";
-        this.gameUrl = "https://vnexpress.net/thu-gian/tro-choi";
+        this.gameUrl = `${this.baseUrl}/thu-gian/tro-choi`;
 
-        this.gameHeading = page.getByRole("heading", { name: "Trò chơi" });
+        this.gameHeading = page.getByRole("heading", {
+            name: "Trò chơi",
+        });
+
         this.loginPopup = page.getByText("Đăng nhập / Tạo tài khoản");
-        this.closePopupButton = page.getByRole("button", { name: "×" });
+
+        this.closePopupButton = page.getByRole("button", {
+            name: "×",
+        });
     }
 
+    // Navigation
     async gotoGamePage() {
         await this.page.goto(this.gameUrl, {
             timeout: 60000,
@@ -31,6 +36,11 @@ export class GamePage {
         await expect(this.gameHeading).toBeVisible();
     }
 
+    async backToGamePage() {
+        await this.gotoGamePage();
+    }
+
+    // Helpers
     getGameLink(gameSlug: string): Locator {
         return this.page
             .locator(`a[href*="/thu-gian/tro-choi/${gameSlug}"]`)
@@ -38,15 +48,25 @@ export class GamePage {
     }
 
     getGameCard(gameSlug: string): Locator {
-        return this.getGameLink(gameSlug).locator("xpath=ancestor::article[1]");
+        return this.getGameLink(gameSlug)
+            .locator("xpath=ancestor::article[1]");
     }
 
+    // Verification
     async verifyGameListVisible() {
         await expect(this.getGameLink("xep-chu")).toBeVisible();
         await expect(this.getGameLink("chinh-ta")).toBeVisible();
         await expect(this.getGameLink("sudoku")).toBeVisible();
     }
 
+    async verifyGameDetailPageOpened(gameSlug: string) {
+        await expect(this.page).toHaveURL(
+            new RegExp(`/thu-gian/tro-choi/${gameSlug}`),
+            { timeout: 15000 }
+        );
+    }
+
+    // Actions
     async clickPlayButtonByGameSlug(gameSlug: string) {
         const gameCard = this.getGameCard(gameSlug);
         const playButton = gameCard
@@ -70,26 +90,9 @@ export class GamePage {
         await gameImage.click();
     }
 
-    async verifyGameDetailPageOpened(gameSlug: string) {
-        await expect(this.page).toHaveURL(
-            new RegExp(`/thu-gian/tro-choi/${gameSlug}`),
-            { timeout: 15000 }
-        );
-    }
-
     async closeLoginPopupIfVisible() {
         if (await this.closePopupButton.isVisible().catch(() => false)) {
             await this.closePopupButton.click();
         }
-    }
-
-    async backToGamePage() {
-        await this.page.goto(this.gameUrl, {
-            timeout: 60000,
-            waitUntil: "domcontentloaded",
-        });
-
-        await expect(this.page).toHaveURL(this.gameUrl);
-        await expect(this.gameHeading).toBeVisible();
     }
 }
