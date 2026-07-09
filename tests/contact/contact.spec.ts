@@ -22,4 +22,20 @@ test.describe("VNExpress - Contact Form", () => {
       await contactPage.closeLoginPopupIfVisible();
     });
   });
+
+   test("Not-Fill contact form and handle login popup", async ({ page }) => {
+    const contactPage = new ContactPage(page);
+
+    await test.step("Go to contact page", async () => {
+      await contactPage.gotoContactPage();
+    });
+
+    await test.step("Submit contact form", async () => {
+      await contactPage.submitContactForm();
+    });
+
+    await test.step("Close login popup if displayed", async () => {
+      await contactPage.closeLoginPopupIfVisible();
+    });
+  });
 });
