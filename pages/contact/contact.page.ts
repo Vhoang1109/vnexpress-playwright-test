@@ -1,40 +1,40 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { ContactData } from "../../test-data/contact-data";
+import { BasePage } from "../base-page/base.page";
 
-export class ContactPage {
-    page: Page;
+export class ContactPage extends BasePage {
+    contactUrl: string;
 
     nameInput: Locator;
     emailInput: Locator;
     categorySelect: Locator;
     titleInput: Locator;
     contentInput: Locator;
-
     submitButton: Locator;
     closePopupButton: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
 
-        // Contact form fields
+        this.contactUrl = `${this.baseUrl}/lien-he-toa-soan`;
+
         this.nameInput = page.locator("#fName");
         this.emailInput = page.locator("#fEmail");
         this.categorySelect = page.locator("#fCategory");
         this.titleInput = page.locator("#fTitle");
         this.contentInput = page.locator("#fContent");
 
-        // Actions
         this.submitButton = page.getByRole("button", { name: "Gửi" });
         this.closePopupButton = page.getByRole("button", { name: "×" });
     }
 
     async gotoContactPage() {
-        await this.page.goto("https://vnexpress.net/lien-he-toa-soan", {
+        await this.page.goto(this.contactUrl, {
             timeout: 60000,
             waitUntil: "domcontentloaded",
         });
 
-        await expect(this.nameInput).toBeVisible();
+        await this.verifyContactPageLoaded();
     }
 
     async fillContactForm(data: ContactData) {
@@ -51,10 +51,13 @@ export class ContactPage {
     }
 
     async closeLoginPopupIfVisible() {
-        // VNExpress có thể bật popup login sau khi gửi form
-        if (await this.closePopupButton.isVisible({ timeout: 5000 })) {
+        if (await this.closePopupButton.isVisible({ timeout: 5000 }).catch(() => false)) {
             await this.closePopupButton.click();
             await expect(this.closePopupButton).toBeHidden();
         }
+    }
+
+    async verifyContactPageLoaded() {
+        await expect(this.nameInput).toBeVisible();
     }
 }
