@@ -1,39 +1,51 @@
-import { expect, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "../base-page/base.page";
 
-export class CarPage {
-    page: Page;
+export class CarPage extends BasePage {
+    // Locators
+    carMenu: Locator;
+    theoryExamLink: Locator;
+    licenseA1Link: Locator;
+    exam1Link: Locator;
 
     constructor(page: Page) {
-        this.page = page;
-    }
+        super(page);
 
-    async gotoHomePage() {
-        await this.page.goto("https://vnexpress.net/", {
-            waitUntil: "domcontentloaded",
-            timeout: 60000,
+        this.carMenu = page.locator("#wrap-main-nav").getByRole("link", { name: "Xe" });
+
+        this.theoryExamLink = page.getByRole("link", {
+            name: "Thi lý thuyết",
+        });
+
+        this.licenseA1Link = page.getByRole("link", {
+            name: "A1",
+        });
+
+        this.exam1Link = page.getByRole("link", {
+            name: "Đề số 1 Play",
+            exact: true,
         });
     }
 
+    // Actions
     async clickCarMenu() {
-        await this.page.locator("#wrap-main-nav")
-            .getByRole("link", { name: "Xe" })
-            .click();
+        await this.carMenu.click();
     }
 
     async clickTheoryExam() {
-        await this.page.getByRole("link", { name: "Thi lý thuyết" }).click();
+        await this.theoryExamLink.click();
     }
 
     async selectLicense() {
-        await this.page.getByRole("link", { name: "A1" }).click();
+        await this.licenseA1Link.click();
     }
 
-    async openExam1() {
-        await this.page.getByRole("link", { name: "Đề số 1 Play", exact: true, }).click();
+    async openExam() {
+        await this.exam1Link.click();
     }
 
-    async verifyExam1Opened() {
-        await expect(
-            this.page.getByRole("link", {name: "Đề số 1 Play", exact: true,})).toBeVisible();
+    // Verification
+    async verifyExamOpened() {
+        await expect(this.exam1Link).toBeVisible();
     }
 }
