@@ -1,57 +1,42 @@
 import { expect, Page } from "@playwright/test";
+import { BasePage } from "../base-page/base.page";
 
-export class EduPage {
-    page: Page;
-
-    eduLocatorXpath = "(//a[@title='Giáo dục'])[1]";
-    eduAdmissionsXpath = "(//a[@title='Tuyển sinh'])[1]";
-    eduExamScoreXpath = "//a[@title='Điểm thi']";
-    eduSbdXpath = "//input[@id='tc-search-input']";
-    eduBtnXpath = "//button[@type='button']";
+export class EduPage extends BasePage {
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
     }
 
-    async gotoHomePage() {
-        await this.page.goto("https://vnexpress.net/");
-    }
-
+    // Actions
     async clickEducate() {
-        await this.page.locator(this.eduLocatorXpath).click();
+        await this.page.locator("(//a[@title='Giáo dục'])[1]").click();
     }
 
     async clickAdmissions() {
-        await this.page.locator(this.eduAdmissionsXpath).click();
+        await this.page.locator("(//a[@title='Tuyển sinh'])[1]").click();
     }
 
     async clickExamScore() {
-        await this.page.locator(this.eduExamScoreXpath).click();
+        await this.page.locator("//a[@title='Điểm thi']").click();
     }
 
     async searchExamNumber(sbd: string) {
-        const textbox = this.page.locator(this.eduSbdXpath);
+        const textbox = this.page.locator("//input[@id='tc-search-input']");
 
-        await textbox.click();
         await textbox.fill(sbd);
     }
 
     async clickViewResult() {
-        await this.page.locator(this.eduBtnXpath).click();
+        await this.page.locator("//button[@type='button']").click();
     }
 
-    // verify (web-first assersion)
-
+    // Verification
     async verifyInvalidExamNumber() {
-        await expect(
-            this.page.getByText("Số báo danh không đúng")
-        ).toBeVisible();
+        await expect(this.page.getByText("Số báo danh không đúng")).toBeVisible();
     }
 
     async verifyEmptyExamNumber() {
-        await expect(
-            this.page.getByText("Vui lòng nhập số báo danh")
-        ).toBeVisible();
+        await expect(this.page.getByText("Vui lòng nhập số báo danh")).toBeVisible();
     }
 
     async verifyResultOpened() {
