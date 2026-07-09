@@ -1,33 +1,13 @@
-// test-data/news.data.ts
-
-export type NewsCategory = {
+export type NewsCategories = {
     name: string;
-    path: string;
+    slug: string;
 };
 
-export const newsCategories: NewsCategory[] = [
-    {
-        name: "Chính trị",
-        path: "/thoi-su/chinh-tri",
-    },
-    {
-        name: "Kỷ nguyên mới",
-        path: "/thoi-su/huong-toi-ky-nguyen-moi",
-    },
-    {
-        name: "Dân sinh",
-        path: "/thoi-su/dan-sinh",
-    },
-    {
-        name: "Việc làm",
-        path: "/thoi-su/lao-dong-viec-lam",
-    },
-    {
-        name: "Giao thông",
-        path: "/thoi-su/giao-thong",
-    },
-    {
-        name: "Quỹ Hy vọng",
-        path: "/thoi-su/quy-hy-vong",
-    },
+export const newsCategories: NewsCategories[] = [
+    { name: "Chính trị", slug: "chinh-tri" },
+    { name: "Kỷ nguyên mới", slug: "huong-toi-ky-nguyen-moi" },
+    { name: "Dân sinh", slug: "dan-sinh" },
+    { name: "Việc làm", slug: "lao-dong-viec-lam" },
+    { name: "Giao thông", slug: "giao-thong" },
+    { name: "Quỹ Hy vọng", slug: "quy-hy-vong" },
 ];
