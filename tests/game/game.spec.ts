@@ -14,7 +14,7 @@ test.describe("VNExpress - Thư giãn - Trò chơi", () => {
             await gamePage.gotoGamePage();
         });
 
-        await test.step("BeforeEach - Web-first assertion: Verify 3 games are visible", async () => {
+        await test.step("BeforeEach - WFA: Verify 3 games are visible", async () => {
             await gamePage.verifyGameListVisible();
         });
     });
@@ -38,7 +38,7 @@ test.describe("VNExpress - Thư giãn - Trò chơi", () => {
     test("GAME_001 - Click nút Chơi game Xếp chữ", async ({ page }) => {
         const gamePage = new GamePage(page);
 
-        await test.step("Click nút Chơi game Xếp chữ", async () => {
+        await test.step("WFA + Click nút Chơi game Xếp chữ", async () => {
             await gamePage.clickPlayButtonByGameSlug(gameData01.gameSlug);
         });
 
@@ -50,11 +50,11 @@ test.describe("VNExpress - Thư giãn - Trò chơi", () => {
     test("GAME_002 - Click ảnh game Xếp chữ", async ({ page }) => {
         const gamePage = new GamePage(page);
 
-        await test.step("Click ảnh game Xếp chữ", async () => {
+        await test.step("WFA + Click ảnh game Xếp chữ", async () => {
             await gamePage.clickGameImageByGameSlug(gameData01.gameSlug);
         });
 
-        await test.step("Verify Xếp chữ page opened", async () => {
+        await test.step("WFA: Verify Xếp chữ page opened", async () => {
             await gamePage.verifyGameDetailPageOpened(gameData01.gameSlug);
         });
     });
@@ -62,7 +62,7 @@ test.describe("VNExpress - Thư giãn - Trò chơi", () => {
     test("GAME_003 - Click nút Chơi game Chính tả", async ({ page }) => {
         const gamePage = new GamePage(page);
 
-        await test.step("Click nút Chơi game Chính tả", async () => {
+        await test.step("WFA + Click nút Chơi game Chính tả", async () => {
             await gamePage.clickPlayButtonByGameSlug(gameData02.gameSlug);
         });
 
@@ -74,11 +74,11 @@ test.describe("VNExpress - Thư giãn - Trò chơi", () => {
     test("GAME_004 - Click ảnh game Chính tả", async ({ page }) => {
         const gamePage = new GamePage(page);
 
-        await test.step("Click ảnh game Chính tả", async () => {
+        await test.step("WFA + Click ảnh game Chính tả", async () => {
             await gamePage.clickGameImageByGameSlug(gameData02.gameSlug);
         });
 
-        await test.step("Verify Chính tả page opened", async () => {
+        await test.step("WFA: Verify Chính tả page opened", async () => {
             await gamePage.verifyGameDetailPageOpened(gameData02.gameSlug);
         });
     });
@@ -86,7 +86,7 @@ test.describe("VNExpress - Thư giãn - Trò chơi", () => {
     test("GAME_005 - Click nút Chơi game Sudoku", async ({ page }) => {
         const gamePage = new GamePage(page);
 
-        await test.step("Click nút Chơi game Sudoku", async () => {
+        await test.step("WFA + Click nút Chơi game Sudoku", async () => {
             await gamePage.clickPlayButtonByGameSlug(gameData03.gameSlug);
         });
 
@@ -98,11 +98,11 @@ test.describe("VNExpress - Thư giãn - Trò chơi", () => {
     test("GAME_006 - Click ảnh game Sudoku", async ({ page }) => {
         const gamePage = new GamePage(page);
 
-        await test.step("Click ảnh game Sudoku", async () => {
+        await test.step("WFA + Click ảnh game Sudoku", async () => {
             await gamePage.clickGameImageByGameSlug(gameData03.gameSlug);
         });
 
-        await test.step("Verify Sudoku page opened", async () => {
+        await test.step("WFA: Verify Sudoku page opened", async () => {
             await gamePage.verifyGameDetailPageOpened(gameData03.gameSlug);
         });
     });
