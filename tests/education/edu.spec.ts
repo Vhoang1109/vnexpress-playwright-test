@@ -1,30 +1,81 @@
-import { test } from '@playwright/test'
-import { EduPage } from '../../pages/education/edu.page'
-// with POM
-test('Click education', async ({ page }) => {
-    const eduPage = new EduPage(page);
+import { test } from "@playwright/test";
+import { EduPage } from "../../pages/education/edu.page";
+import { eduData } from "../../test-data/edu-data";
 
-    await test.step("Goto home page", async () => {
-        await eduPage.gotoHomePage();
-    });
+test.describe("VNExpress - Education", () => {
 
-    await test.step("Click Giáo dục menu by XPath", async () => {
-        await eduPage.clickEducate();
-    });
+    test.beforeEach(async ({ page }) => {
+        const eduPage = new EduPage(page);
 
-    await test.step("Click Tuyển sinh by XPath", async () => {
-        await eduPage.clickAdmissions();
-    });
+        await test.step("Go to home page", async () => {
+            await eduPage.gotoHomePage();
+        });
 
-    await test.step("Click Điểm thi by XPath", async () => {
-        await eduPage.clickExamScore();
+        await test.step("Open Điểm thi page", async () => {
+            await eduPage.clickEducate();
+            await eduPage.clickAdmissions();
+            await eduPage.clickExamScore();
+        });
     });
 
-    await test.step("Search SBD ", async () => {
-        await eduPage.searchExamNumber("01020266");
+    test("EDU_001 - Search valid exam number", async ({ page }) => {
+        const eduPage = new EduPage(page);
+
+        await test.step("Enter valid exam number", async () => {
+            await eduPage.searchExamNumber(
+                eduData.validExamNumber.sbd
+            );
+        });
+
+        await test.step("Click View Result", async () => {
+            await eduPage.clickViewResult();
+        });
     });
-    await test.step("Click view results", async () => {
-        await eduPage.clickViewResult();
+
+    test("EDU_002 - Search invalid exam number", async ({ page }) => {
+        const eduPage = new EduPage(page);
+
+        await test.step("Enter invalid exam number", async () => {
+            await eduPage.searchExamNumber(
+                eduData.invalidExamNumber.sbd
+            );
+        });
+
+        await test.step("Click View Result", async () => {
+            await eduPage.clickViewResult();
+        });
+
     });
+
+    test("EDU_003 - Search with empty exam number", async ({ page }) => {
+        const eduPage = new EduPage(page);
+
+        await test.step("Leave exam number empty", async () => {
+            await eduPage.searchExamNumber(
+                eduData.emptyExamNumber.sbd
+            );
+        });
+
+        await test.step("Click View Result", async () => {
+            await eduPage.clickViewResult();
+        });
+    });
+
+    test("EDU_004 - Search with short exam number", async ({ page }) => {
+        const eduPage = new EduPage(page);
+
+        await test.step("Enter short exam number", async () => {
+            await eduPage.searchExamNumber(eduData.shortExamNumber.sbd
+            );
+        });
+
+        await test.step("Click View Result", async () => {
+            await eduPage.clickViewResult();
+        });
+
+        // await test.step("Verify invalid message", async () => {
+        //     await eduPage.verifyInvalidExamNumber();
+        // });
+    });
+
 });
-

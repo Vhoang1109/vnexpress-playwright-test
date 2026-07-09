@@ -1,10 +1,10 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class CarPage {
     page: Page;
 
     constructor(page: Page) {
-        this.page = page
+        this.page = page;
     }
 
     async gotoHomePage() {
@@ -13,8 +13,11 @@ export class CarPage {
             timeout: 60000,
         });
     }
+
     async clickCarMenu() {
-        await this.page.locator("#wrap-main-nav").getByRole("link", { name: "Xe" }).click();
+        await this.page.locator("#wrap-main-nav")
+            .getByRole("link", { name: "Xe" })
+            .click();
     }
 
     async clickTheoryExam() {
@@ -26,6 +29,18 @@ export class CarPage {
     }
 
     async openExam1() {
-        await this.page.getByRole("link", { name: "Đề số 1 Play", exact: true }).click();
+        await this.page.getByRole("link", {
+            name: "Đề số 1 Play",
+            exact: true,
+        }).click();
+    }
+
+    async verifyExam1Opened() {
+        await expect(
+            this.page.getByRole("link", {
+                name: "Đề số 1 Play",
+                exact: true,
+            })
+        ).toBeVisible();
     }
 }

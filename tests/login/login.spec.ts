@@ -84,7 +84,7 @@ test.describe("VNExpress Login", () => {
     });
   });
 
-    test("LOGIN_004 - Login fail with empty email", async ({ page }) => {
+  test("LOGIN_004 - Login fail with empty email", async ({ page }) => {
     const loginPage = new LoginPage(page);
 
     await test.step("Fill Email", async () => {

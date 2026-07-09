@@ -1,18 +1,17 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class EduPage {
     page: Page;
 
-    eduLocatorXpath: string = "(//a[@title='Giáo dục'])[1]";
-    eduAdmissionsXpath: string = "(//a[@title='Tuyển sinh'])[1]";
-    eduExamScoreXpath: string = "//a[@title='Điểm thi']";
-    eduSbdXpath: string = "//input[@id='tc-search-input']";
-    eduBtnXpath: string = "//button[@type='button']";
+    eduLocatorXpath = "(//a[@title='Giáo dục'])[1]";
+    eduAdmissionsXpath = "(//a[@title='Tuyển sinh'])[1]";
+    eduExamScoreXpath = "//a[@title='Điểm thi']";
+    eduSbdXpath = "//input[@id='tc-search-input']";
+    eduBtnXpath = "//button[@type='button']";
 
-    //trong hàm tạo có bao nhiêu tk, khi dùng khởi tạo bấy nhiêu
     constructor(page: Page) {
-        this.page = page
-    };
+        this.page = page;
+    }
 
     async gotoHomePage() {
         await this.page.goto("https://vnexpress.net/");
@@ -31,14 +30,31 @@ export class EduPage {
     }
 
     async searchExamNumber(sbd: string) {
-        await this.page.locator(this.eduSbdXpath).fill(sbd);
-        await this.page.locator(this.eduBtnXpath).click();
+        const textbox = this.page.locator(this.eduSbdXpath);
 
+        await textbox.click();
+        await textbox.fill(sbd);
     }
 
     async clickViewResult() {
         await this.page.locator(this.eduBtnXpath).click();
     }
 
-};
+    // verify (web-first assersion)
 
+    async verifyInvalidExamNumber() {
+        await expect(
+            this.page.getByText("Số báo danh không đúng")
+        ).toBeVisible();
+    }
+
+    async verifyEmptyExamNumber() {
+        await expect(
+            this.page.getByText("Vui lòng nhập số báo danh")
+        ).toBeVisible();
+    }
+
+    async verifyResultOpened() {
+        await expect(this.page.locator("table")).toBeVisible();
+    }
+}
