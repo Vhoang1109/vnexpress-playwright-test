@@ -3,7 +3,6 @@ import { expect, Locator, Page } from "@playwright/test";
 export class NewsPage {
     page: Page;
 
-    baseUrl: string;
     homeUrl: string;
     newsUrl: string;
 
@@ -14,9 +13,8 @@ export class NewsPage {
     constructor(page: Page) {
         this.page = page;
 
-        this.baseUrl = "https://vnexpress.net";
-        this.homeUrl = `${this.baseUrl}/`;
-        this.newsUrl = `${this.baseUrl}/thoi-su`;
+        this.homeUrl = `https://vnexpress.net`;
+        this.newsUrl = `${this.homeUrl}/thoi-su`;
 
         this.newsMenu = page.locator("#wrap-main-nav").getByRole("link", { name: "Thời sự" });
 
@@ -40,18 +38,18 @@ export class NewsPage {
         await expect(this.newsHeading).toBeVisible();
     }
 
-    async openCategory(categoryName: string, path: string) {
-        const category = this.page
-            .getByRole("link", { name: categoryName }).first();
-
+    async openCategory(categoryName: string, slug: string) {
+        const category = this.page.getByRole("link", { name: categoryName, exact: true }).first();
         await expect(category).toBeVisible();
         await category.click();
-
-        await expect(this.page).toHaveURL(`${this.baseUrl}${path}`);
+        await expect(this.page).toHaveURL(`${this.newsUrl}/${slug}`);
     }
 
     async backToNewsPage() {
-        await this.page.goBack();
+        await this.page.goto(this.newsUrl, {
+            waitUntil: "domcontentloaded",
+            timeout: 60000,
+        });
 
         await expect(this.page).toHaveURL(this.newsUrl);
         await expect(this.newsHeading).toBeVisible();
