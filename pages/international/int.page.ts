@@ -1,20 +1,12 @@
 import { Page } from "@playwright/test";
+import { BasePage } from "../base-page/base.page";
 
-export class International {
-    page: Page;
-
+export class International extends BasePage {
     constructor(page: Page) {
-        this.page = page
+        super(page);
     }
 
-    async gotoHomePage() {
-        await this.page.goto("https://vnexpress.net/", {
-            waitUntil: "domcontentloaded",
-            timeout: 60000,
-        });
-    }
     async clickInternational() {
         await this.page.getByTitle("VnExpress International").click();
     }
-
 }

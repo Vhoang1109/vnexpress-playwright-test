@@ -1,19 +1,22 @@
 import { test } from "@playwright/test";
 
 import { International } from "../../pages/international/int.page"
-test
 
-test("navigate to international", async ({ page }) => {
+test.describe("VNExpress - International", async () => {
 
-    const international = new International(page);
+    test("navigate to international", async ({ page }) => {
 
-    await test.step("Go to VNExpress", async () => {
-        await international.gotoHomePage();
+        const international = new International(page);
+
+        await test.step("Go to VNExpress", async () => {
+            await international.gotoHomePage();
+        });
+
+        await test.step("Click International menu", async () => {
+            await international.clickInternational();
+        });
     });
 
-    await test.step("Click International menu", async () => {
-        await international.clickInternational();
-    });
 });
 
 
