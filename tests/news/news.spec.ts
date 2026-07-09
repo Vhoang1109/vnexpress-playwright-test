@@ -1,13 +1,13 @@
 import { test } from "@playwright/test";
 import { NewsPage } from "../../pages/news/news.page";
-import { newsCategories } from "../../test-data/news.data";
+import { newsCategories } from "../../test-data/news-data";
 
 test.describe("VNExpress - Thời sự", () => {
     test.setTimeout(60000);
 
     test("NEWS_E2E_001 - User browses Thời sự categories and opens articles", async ({ page }) => {
         const newsPage = new NewsPage(page);
-  await test.step("Go to homepage", async () => {
+        await test.step("Go to homepage", async () => {
             await newsPage.gotoHomePage();
         });
 
