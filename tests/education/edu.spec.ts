@@ -47,21 +47,7 @@ test.describe("VNExpress - Education", () => {
 
     });
 
-    test("EDU_003 - Search with empty exam number", async ({ page }) => {
-        const eduPage = new EduPage(page);
-
-        await test.step("Leave exam number empty", async () => {
-            await eduPage.searchExamNumber(
-                eduData.emptyExamNumber.sbd
-            );
-        });
-
-        await test.step("Click View Result", async () => {
-            await eduPage.clickViewResult();
-        });
-    });
-
-    test("EDU_004 - Search with short exam number", async ({ page }) => {
+    test("EDU_003 - Search with short exam number", async ({ page }) => {
         const eduPage = new EduPage(page);
 
         await test.step("Enter short exam number", async () => {
@@ -77,5 +63,20 @@ test.describe("VNExpress - Education", () => {
             await eduPage.verifyInvalidExamNumber();
         });
     });
+
+    test("EDU_004 - Search with empty exam number", async ({ page }) => {
+        const eduPage = new EduPage(page);
+
+        await test.step("Leave exam number empty", async () => {
+            await eduPage.searchExamNumber(
+                eduData.emptyExamNumber.sbd
+            );
+        });
+
+        await test.step("Click View Result", async () => {
+            await eduPage.clickViewResult();
+        });
+    });
+
 
 });
