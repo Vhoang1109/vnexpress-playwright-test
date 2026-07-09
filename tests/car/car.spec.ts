@@ -28,7 +28,7 @@ test.describe("VNExpress - Thi lý thuyết", () => {
         });
 
         await test.step("Open Đề số 1", async () => {
-            await carPage.openExam1();
+            await carPage.openExam();
         });
 
 
