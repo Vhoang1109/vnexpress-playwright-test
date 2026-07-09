@@ -5,16 +5,15 @@ import { newsCategories } from "../../test-data/news.data";
 test.describe("VNExpress - Thời sự", () => {
     test.setTimeout(60000);
 
-    test.beforeEach(async ({ page }) => {
-        const newsPage = new NewsPage(page);
-
-        await test.step("Go to Thời sự page", async () => {
-            await newsPage.gotoNewsPage();
-        });
-    });
-
     test("NEWS_E2E_001 - User browses Thời sự categories and opens articles", async ({ page }) => {
         const newsPage = new NewsPage(page);
+  await test.step("Go to homepage", async () => {
+            await newsPage.gotoHomePage();
+        });
+
+        await test.step("Click Thời sự menu", async () => {
+            await newsPage.clickNewsMenu();
+        });
 
         for (const category of newsCategories) {
             await test.step(`Open ${category.name} then back to Thời sự`, async () => {

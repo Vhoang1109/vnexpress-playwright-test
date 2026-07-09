@@ -19,8 +19,8 @@ export const newsCategories: NewsCategory[] = [
         path: "/thoi-su/dan-sinh",
     },
     {
-        name: "Dân sinh",
-        path: "/thoi-su/dan-sinh",
+        name: "Việc làm",
+        path: "/thoi-su/lao-dong-viec-lam",
     },
     {
         name: "Giao thông",
