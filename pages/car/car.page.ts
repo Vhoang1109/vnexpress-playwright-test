@@ -24,7 +24,7 @@ export class CarPage {
         await this.page.getByRole("link", { name: "Thi lý thuyết" }).click();
     }
 
-    async selectLicenseA1() {
+    async selectLicense() {
         await this.page.getByRole("link", { name: "A1" }).click();
     }
 
