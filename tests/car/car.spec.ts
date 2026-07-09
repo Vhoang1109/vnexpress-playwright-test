@@ -24,7 +24,7 @@ test.describe("VNExpress - Thi lý thuyết", () => {
         });
 
         await test.step("Select A1", async () => {
-            await carPage.selectLicenseA1();
+            await carPage.selectLicense();
         });
 
         await test.step("Open Đề số 1", async () => {
