@@ -36,9 +36,7 @@ test.describe("VNExpress - Education", () => {
         const eduPage = new EduPage(page);
 
         await test.step("Enter invalid exam number", async () => {
-            await eduPage.searchExamNumber(
-                eduData.invalidExamNumber.sbd
-            );
+            await eduPage.searchExamNumber(eduData.invalidExamNumber.sbd);
         });
 
         await test.step("Click View Result", async () => {
@@ -53,6 +51,9 @@ test.describe("VNExpress - Education", () => {
         await test.step("Enter short exam number", async () => {
             await eduPage.searchExamNumber(eduData.shortExamNumber.sbd
             );
+         await test.step("Verify invalid message", async () => {
+            await eduPage.verifyInvalidExamNumber();
+        });    
         });
 
         await test.step("Click View Result", async () => {
