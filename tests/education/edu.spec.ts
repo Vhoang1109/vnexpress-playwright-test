@@ -77,6 +77,10 @@ test.describe("VNExpress - Education", () => {
         await test.step("Click View Result", async () => {
             await eduPage.clickViewResult();
         });
+
+          await test.step("Verify Empty message", async () => {
+            await eduPage.verifyEmptyExamNumber();
+        });
     });
 
 
