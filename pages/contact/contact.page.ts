@@ -3,6 +3,7 @@ import { ContactData } from "../../test-data/contact-data";
 import { BasePage } from "../base-page/base.page";
 
 export class ContactPage extends BasePage {
+   
     contactUrl: string;
 
     nameInput: Locator;
