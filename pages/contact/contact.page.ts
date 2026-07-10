@@ -3,7 +3,7 @@ import { ContactData } from "../../test-data/contact-data";
 import { BasePage } from "../base-page/base.page";
 
 export class ContactPage extends BasePage {
-   
+
     contactUrl: string;
 
     nameInput: Locator;
@@ -51,6 +51,9 @@ export class ContactPage extends BasePage {
         await this.submitButton.click();
     }
 
+    // Chỉ đóng popup bật lên đăng nhập nếu nó đang hiển thị.
+    // Tránh lỗi kiểm thử khi popup không xuất hiện.
+    
     async closeLoginPopupIfVisible() {
         if (await this.closePopupButton.isVisible({ timeout: 5000 }).catch(() => false)) {
             await this.closePopupButton.click();
