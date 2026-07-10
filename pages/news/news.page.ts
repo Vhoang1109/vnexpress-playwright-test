@@ -1,9 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "../base-page/base.page";
 
-export class NewsPage {
-    page: Page;
-
-    homeUrl: string;
+export class NewsPage extends BasePage {
     newsUrl: string;
 
     newsMenu: Locator;
@@ -11,10 +9,9 @@ export class NewsPage {
     mainArticle: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
 
-        this.homeUrl = `https://vnexpress.net`;
-        this.newsUrl = `${this.homeUrl}/thoi-su`;
+        this.newsUrl = `${this.baseUrl}/thoi-su`;
 
         this.newsMenu = page.locator("#wrap-main-nav").getByRole("link", { name: "Thời sự" });
 
@@ -22,15 +19,7 @@ export class NewsPage {
         this.mainArticle = page.locator("article").first();
     }
 
-    async gotoHomePage() {
-        await this.page.goto(this.homeUrl, {
-            timeout: 60000,
-            waitUntil: "domcontentloaded",
-        });
-
-        await expect(this.newsMenu).toBeVisible();
-    }
-
+    // Navigation
     async clickNewsMenu() {
         await this.newsMenu.click();
 
@@ -40,8 +29,10 @@ export class NewsPage {
 
     async openCategory(categoryName: string, slug: string) {
         const category = this.page.getByRole("link", { name: categoryName, exact: true }).first();
+
         await expect(category).toBeVisible();
         await category.click();
+
         await expect(this.page).toHaveURL(`${this.newsUrl}/${slug}`);
     }
 
@@ -55,6 +46,7 @@ export class NewsPage {
         await expect(this.newsHeading).toBeVisible();
     }
 
+    // Actions
     async clickMainArticleImage() {
         const imageLink = this.mainArticle.locator(".thumb-art a").first();
 
@@ -70,14 +62,13 @@ export class NewsPage {
     }
 
     async clickMainArticleDescription() {
-        const descriptionLink = this.mainArticle
-            .locator(".description a")
-            .first();
+        const descriptionLink = this.mainArticle.locator(".description a").first();
 
         await expect(descriptionLink).toBeVisible();
         await descriptionLink.click();
     }
 
+    // Verification
     async verifyArticleDetailOpened() {
         await expect(this.page).not.toHaveURL(this.newsUrl);
         await expect(this.page.locator("h1")).toBeVisible();
