@@ -7,7 +7,7 @@ export class LoginPage extends BasePage {
     constructor(page: Page) {
         super(page);
 
-        this.loginFrame = page.locator("iframe").nth(2).contentFrame();
+        this.loginFrame = page.frameLocator("iframe.iframe_guest");
     }
 
     // Navigation
