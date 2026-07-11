@@ -28,7 +28,7 @@ export class LoginPage extends BasePage {
         await expect(emailTextbox).toBeVisible();
         await emailTextbox.click();
         await emailTextbox.clear();
-        await emailTextbox.pressSequentially(email, { delay: 80 });
+        await emailTextbox.pressSequentially(email, { delay: 100 });
         await expect(emailTextbox).toHaveValue(email);
     }
 
@@ -66,5 +66,9 @@ export class LoginPage extends BasePage {
 
     async verifyPasswordTextbox() {
         await expect(this.loginFrame.getByRole("textbox", { name: "Mật khẩu", })).toBeVisible();
+    }
+
+    async verifyEmailRequiredMessage() {
+        await expect(this.loginFrame.getByText("Hãy nhập email")).toBeVisible();
     }
 }
