@@ -1,7 +1,7 @@
 # VNexpress Website Automation Testing With Playwright
 - Mục đích của dự án: tự động hoá quá trình kiểm thử các chức năng chính của VNExpress, qua đó giảm thời gian kiểm thử thủ công, phát hiện lỗi và kiểm tra tính ổn định của web
 
-## Test function
+## Test Function
 - Sử dụng playwright - typescript để build framework automation-testing cho các chức năng trong website https://vnexpress.net/
    + Đăng nhập 
    + Mục Thời sự 
