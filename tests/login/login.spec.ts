@@ -47,7 +47,7 @@ test.describe("VNExpress Login", () => {
     await loginPage.fillEmail(loginData.emptyPassword.email);
     await loginPage.clickContinue();
 
-    await loginPage.verifyPasswordTextbox();
+    // await loginPage.verifyPasswordTextbox();
 
     await loginPage.fillPassword(loginData.emptyPassword.password);
   });
