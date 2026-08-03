@@ -1,0 +1,17 @@
+stages:   # List of stages for jobs, abd their order of execution
+  - test
+
+test-playwright:  # This job runs in the test stage
+  stage: test  
+  image: mcr.microsoft.com/playwright:v1.61.0-noble
+ 
+
+  script:
+    - npm ci
+    - npx playwright install --with-deps
+    - npx playwright test
+
+  artifacts:
+    when: always
+    paths:
+      - playwright-report/**
